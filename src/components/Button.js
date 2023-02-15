@@ -1,13 +1,15 @@
 import styled from "styled-components";
+import { colors } from "@/constants";
 
 const ButtonDiv = styled.span`
-    background-color: red;
+    background-color: ${colors.theme1};
+    color: ${colors.buttonText};
     padding: 10px;
     border-radius: 5px;
     font-size: 1.5rem;
 
     &:hover {
-        background-color: green;
+        background-color: ${colors.buttonHighlight};
         cursor: pointer;
     }
 `; 

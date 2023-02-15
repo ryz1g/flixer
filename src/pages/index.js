@@ -1,15 +1,22 @@
 import styled from "styled-components";
 import MovieTile from "@/components/MovieTile";
 import Button from "@/components/Button";
-import TrendingRequest from "@/requests/trendingRequest";
+import trendingRequest from "@/requests/trendingRequest";
+import getGenresRequest from "@/requests/getGenresRequest";
 import { useState,useEffect } from "react";
+import { colors } from "@/constants";
+
+const HomePageBase = styled.div`
+  background-color: black;
+`;
 
 const WelcomeHeader = styled.div`
   font-size: 4rem;
+  font-weight: 800;
   display: flex;
   justify-content: center;
   padding: 5px;
-  color: red;
+  color: ${colors.theme1};
 `;
 
 const DisplayGrid = styled.div`
@@ -23,7 +30,7 @@ const DisplayGrid = styled.div`
 const TileGrid = styled.div`
   display: inline-grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fit,minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit,minmax(200px, 1fr));
   /* grid-template-columns: ; */
   /* grid-auto-flow: row;
   grid-auto-rows:  */
@@ -45,32 +52,49 @@ const ButtonRibbon = styled.div`
 
 export default function Home() {
   const [movieList, setMovieList] = useState([]);
-  const [pageNum, setPageNum] = useState(1);
+  // const [pageNum, setPageNum] = useState(1);
+  const [genres, setGenres] = useState({});
 
   useEffect(() => {
-    TrendingRequest(pageNum).then(result => {
+    getGenresRequest()
+    .then(result => {
+      setGenres(result);
+      // console.log(result);
+    })
+    
+    trendingRequest()
+    .then(result => {
       setMovieList(result);
+      // console.log(result);
     });
-  },[pageNum]);
+  },[]);
 
   return (
-    <>
+    <HomePageBase>
       <WelcomeHeader>Welcome to Flixer</WelcomeHeader>
       {movieList.length === 0 ? 
         <LoadingDiv>Loading.....</LoadingDiv> 
         :
         <DisplayGrid>
           <TileGrid>
-            {movieList.map(({id,poster_path,title}) => {
-              return <MovieTile key={id} url={"https://image.tmdb.org/t/p/w300"+poster_path} title={title}/>
+            {movieList.map(({id,poster_path,title,overview,vote_average,vote_count,genre_ids}) => {
+              return <MovieTile key={id} 
+                                id={id}
+                                url={"https://image.tmdb.org/t/p/w300"+poster_path} 
+                                title={title}
+                                overview={overview}
+                                vote_average={Math.floor(vote_average*100)/100}
+                                vote_count={vote_count}
+                                genre_ids={genre_ids}
+                                genres={genre_ids.map((id) => genres[id])}/>
             })}
           </TileGrid>
-          <ButtonRibbon>
+          {/* <ButtonRibbon>
             <Button onClick={() => setPageNum(pageNum !== 1 ? pageNum-1 : pageNum)} label="Previous Page"/>
             <Button onClick={() => setPageNum(pageNum !== movieList.length-1 ? pageNum+1 : pageNum)} label="Next Page"/>
-          </ButtonRibbon>
+          </ButtonRibbon> */}
         </DisplayGrid>
       }
-    </>
+    </ HomePageBase>
   )
 }
