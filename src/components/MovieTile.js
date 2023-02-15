@@ -6,14 +6,21 @@ const Tile = styled.div`
     flex-direction: column;
     width: 250px;
     color: white;
-    border-radius: 15px;
+    border-radius: 25px 0px 0px 0px;
     overflow: hidden;
+    gap: 10px;
+    box-shadow: -3px -3px 10px rgba(100,100,100,0.7);
+
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 const Title = styled.div`
     display: flex;
     justify-content: center;
     text-align: center;
+    font-size: 1.2rem;
 `;
 
 function MovieTile({url, title}) {
