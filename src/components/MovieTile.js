@@ -13,6 +13,7 @@ const Tile = styled.div`
 const Title = styled.div`
     display: flex;
     justify-content: center;
+    text-align: center;
 `;
 
 function MovieTile({url, title}) {
