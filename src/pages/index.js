@@ -2,8 +2,7 @@ import styled from "styled-components";
 import MovieTile from "@/components/MovieTile";
 import TrendingRequest from "@/requests/trendingRequest";
 import { useState,useEffect } from "react";
-import axios from "axios";
-import api from "@/api";
+
 
 const WelcomeHeader = styled.div`
   font-size: 4rem;
@@ -15,7 +14,7 @@ const WelcomeHeader = styled.div`
 
 const TileGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(3,1fr);
   gap: 5px;
 `;
 
@@ -24,17 +23,12 @@ const TestDiv = styled.div`
   color: red;
 `;
 
-const getTrendingMovies = async () => {
-  const d = await axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=${api["api-key"]}&language=en-US&page=2`);
-  const data = await d.data.results;
-  return data;
-};
 
 export default function Home() {
   const [movieList, setMovieList] = useState([]);
 
   useEffect(() => {
-    getTrendingMovies().then(result => {
+    TrendingRequest(5).then(result => {
       setMovieList(result);
     });
   },[]);

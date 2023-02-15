@@ -1,24 +1,11 @@
 import axios from "axios";
-import { useEffect } from "react";
+import api from "@/api";
 
-const url = "https://api.themoviedb.org/3/movie/upcoming?api_key=17605620b03edceff6e052ed68e6ee0a&language=en-US&page=1";
+const url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${api["api-key"]}&language=en-US&page=`;
 
-const TrendingRequest = () => {
-    var data;
-    const fetchData = async () => {
-        try {
-            const res = await axios.get(url);
-            return res.data;
-        }
-        catch(err) {
-            console.log(err);
-        }
-    }
-
-    // useEffect(() => {
-    //     data=fetchData();
-    // },[])
-
+const TrendingRequest = async (pageNum) => {
+    const d = await axios.get(url+pageNum);
+    const data = await d.data.results;
     return data;
 };
 
