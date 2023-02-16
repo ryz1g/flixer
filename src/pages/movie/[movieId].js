@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import getMovieDetailsRequest from "@/requests/getMovieRequest";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { useState,useEffect } from "react";
 
 const MoviePage = () => {
@@ -8,13 +9,16 @@ const MoviePage = () => {
     const [movieDetails, setMovieDetails] = useState({});
 
     useEffect(() => {
-        getMovieDetailsRequest(movieId).then((result) => setMovieDetails(result))
+        getMovieDetailsRequest(movieId).then((result) => setMovieDetails(result));
     },[])
 
     return (
         <div>
-            <div>{`Movie ID -> ${movieId}`}</div>
-            {JSON.stringify(movieDetails)}
+            {
+                Object.keys(movieDetails).length === 0 ? <LoadingSpinner /> 
+                :
+                JSON.stringify(movieDetails)
+            }
         </div>
     );
 }
