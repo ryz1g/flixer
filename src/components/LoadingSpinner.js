@@ -21,17 +21,21 @@ const Spinner = styled.div`
 
 const FullPageDiv = styled.div`
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    gap: 40px;
+    font-size: 2rem;
+    font-weight: 900;
     align-items: center;
-    width:100vw;
-    height:100vh;
+    width:100%;
+    height:calc(100vh - 160px);
     background-color: black;
 `;
 
-const LoadingSpinner = () => {
+const LoadingSpinner = ({children}) => {
     return (
         <FullPageDiv>
+            {children}
             <Spinner />
         </FullPageDiv>
     );
