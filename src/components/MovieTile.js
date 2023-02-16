@@ -1,5 +1,4 @@
 import styled, { keyframes } from "styled-components";
-import { Keyframes } from "styled-components";
 import Image from "next/image";
 import { useState } from "react";
 import { colors } from "@/constants";
@@ -17,7 +16,7 @@ const TileGrowAnimation = keyframes`
 
     }
     100% {
-        transform: scale(1.1);
+        transform: scale(1.08);
     }
 `;
 
@@ -27,7 +26,7 @@ const Tile = styled.div`
     flex-direction: column;
     /* width: ${({overlay}) => overlay ? "250px" : "200px"}; */
     color: ${colors.hoverTileText};
-    border-radius: 25px 10px 10px 10px;
+    border-radius: 25px 5px 25px 25px;
     overflow: hidden;
     // gap: 10px;
 
@@ -36,8 +35,9 @@ const Tile = styled.div`
         top: -40px;
         left: -25px;
         z-index: 20;
-        /* box-shadow: -5px -5px 8px ${colors.hoverTileBase};*/
+        box-shadow: 0px 0px 50px ${colors.theme1Highlight};
         animation: ${TileGrowAnimation} 0.15s ease-in-out;
+        animation-fill-mode: backwards;
     }
 `;
 
@@ -109,7 +109,7 @@ function MovieTile({id, url, title, overview, vote_average, vote_count, genres})
                 <Image src={url} alt="Not Available!" width={overlay ? "250" : "200"} height={overlay ? "375" : "300"}/>
                 {overlay ? 
                     <Overlay overlay={overlay}>
-                        <RatingDiv>{vote_average}</RatingDiv>
+                        <RatingDiv>{vote_average+"/10"}</RatingDiv>
                         <RatingDiv>{getStarString(vote_average/2)+` (${vote_count})`}</RatingDiv>
                         <GenreDiv>
                             {genres.map((genre) => <span key={genre}>{genre}</span>)}
