@@ -15,7 +15,8 @@ const Spinner = styled.div`
     height: 50px;
     width: 50px;
     background-color: ${colors.theme1};
-    animation: ${spinAnimation} 2s;
+    animation: ${spinAnimation} 2s ease-in-out;
+    animation-direction: alternate;
     animation-iteration-count: infinite;
 `;
 
