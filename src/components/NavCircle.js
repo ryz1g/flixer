@@ -1,5 +1,15 @@
 import styled from "styled-components";
 import { colors } from "@/constants";
+import { keyframes } from "styled-components";
+
+const growAnimation = keyframes`
+    0% {
+
+    }
+    100% {
+        transform: scale(1.2);
+    }
+`;
 
 const NavCircleDiv = styled.div`
     display:flex;
@@ -15,6 +25,8 @@ const NavCircleDiv = styled.div`
     
     &:hover {
         cursor: pointer;
+        animation: ${growAnimation} 0.1s ease-in-out;
+        animation-fill-mode: forwards;
     }
 `;
 

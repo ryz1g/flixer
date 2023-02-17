@@ -16,6 +16,7 @@ const Flixer = styled.span`
     font-weight: 900;
     cursor: pointer;
     color: ${colors.pureBlack};
+    padding-right: 10px;
 `;
 
 const Header = () => {
