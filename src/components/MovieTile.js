@@ -37,7 +37,7 @@ const Tile = styled.div`
         z-index: 20;
         box-shadow: 0px 0px 50px ${colors.theme1Highlight};
         animation: ${TileGrowAnimation} 0.15s ease-in-out;
-        animation-fill-mode: backwards;
+        animation-fill-mode: forwards;
     }
 `;
 

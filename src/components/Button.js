@@ -5,7 +5,6 @@ const ButtonDiv = styled.span`
     background-color: ${colors.theme1};
     color: ${colors.buttonText};
     padding: 10px;
-    border-radius: 5px;
     font-size: 1.5rem;
 
     &:hover {
