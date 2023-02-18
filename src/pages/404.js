@@ -31,7 +31,7 @@ const Page404 = () => {
             {"404"}
             <Divider />
             <InfoDiv>
-                We can't find this page!
+                {"We can't find this page!"}
             </InfoDiv>
         </Div404>
     );

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import getMovieDetailsRequest from "@/requests/getMovieRequest";
+import { getMovieDetails } from "@/requests";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useState,useEffect } from "react";
 
@@ -9,7 +9,7 @@ const MoviePage = () => {
     const [movieDetails, setMovieDetails] = useState({});
 
     useEffect(() => {
-        getMovieDetailsRequest(movieId).then((result) => setMovieDetails(result));
+        getMovieDetails(movieId).then((result) => setMovieDetails(result));
     },[])
 
     return (
