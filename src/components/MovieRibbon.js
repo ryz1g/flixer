@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 const WrapperRibbon = styled.div`
     position: relative;
     width: 100%;
+    min-width: 635px;
     height: 90px;
 `;
 
@@ -43,20 +44,26 @@ const Ribbon = styled.div`
 
 const Title = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
     text-align: center;
     font-size: 1.1rem;
     font-weight: 800;
     padding: 10px
 `;
 
-const GenreDiv = styled.span`
+const InfoDiv = styled.span`
     display: flex;
     flex-direction: row;
     align-items: center;
     color: ${colors.theme1};
-    gap: 5px;
+    gap: 10px;
+
+    & > span {
+        font-size: 0.8rem;
+        font-weight: 400;
+    }
 `;
 
 const MainContentDiv = styled.div`
@@ -73,29 +80,11 @@ const RatingDiv = styled.div`
     color: ${colors.ratings};
 `;
 
-function MovieRibbon({id, rank, currentPage, url, title, vote_average, vote_count, genres}) {
+function MovieRibbon({id, rank, currentPage, url, title, release_date, vote_average, vote_count, genres}) {
     const router = useRouter();
     const handleClick = (id) => {
         router.push(`/movie/${id}`);
     }
-
-    const getStarString = (rating) => {
-        var st="";
-        var total=5;
-        while(rating > 1) {
-            st+="★";
-            rating--;
-            total--;
-        }
-        if(rating >= 0.5) {
-            st+="★";total--;
-        }
-        while(total!=0) {
-            st+="☆";
-            total--;
-        }
-        return st;
-    };
 
     return (
         <WrapperRibbon>
@@ -103,18 +92,19 @@ function MovieRibbon({id, rank, currentPage, url, title, vote_average, vote_coun
                 <MainContentDiv>
                     <Title>{(currentPage-1)*20+rank}</Title>
                     <Image src={url} alt="Not Available!" width="60" height="90" />
-                    <Title>{title}</ Title>
-                    <GenreDiv>
-                        {"("}
-                        {genres.map((genre,index) => {
-                            return <span key={genre}>{`${genre}${index !== genres.length-1 ? " | " : ""}`}</span>
-                        })}
-                        {")"}
-                    </GenreDiv>
+                    <Title>
+                        <div>{title}</div>
+                        <InfoDiv>
+                            {release_date.slice(0,4)+" |"}
+                            {genres.map((genre,index) => {
+                                return <span key={genre}>{`${genre}${index !== genres.length-1 ? "," : ""}`}</span>
+                            })}
+                        </InfoDiv>
+                    </ Title>
                 </MainContentDiv>
                 <RatingDiv>
-                    {vote_average+" / 10"}
-                    {getStarString(vote_average/2)+` (${vote_count})`}
+                    {vote_average+" / 10 "}
+                    {`(${vote_count} votes)`}
                 </RatingDiv>
             </Ribbon>
         </WrapperRibbon>

@@ -32,7 +32,7 @@ const MovieList = ({movieList, currentPage}) => {
     return (
         <DisplayList>
             <RibbonList>
-              {movieList.map(({id,poster_path,title,vote_average,vote_count,genre_ids}, index) => {
+              {movieList.map(({id,poster_path,title,vote_average,vote_count,genre_ids,release_date}, index) => {
                 return <MovieRibbon key={id} 
                                   id={id}
                                   rank={index+1}
@@ -42,7 +42,8 @@ const MovieList = ({movieList, currentPage}) => {
                                   vote_average={vote_average}
                                   vote_count={vote_count}
                                   genre_ids={genre_ids}
-                                  genres={genre_ids.map((id) => genres[id])}/>
+                                  genres={genre_ids.map((id) => genres[id])}
+                                  release_date={release_date}/>
               })}
             </RibbonList>
           </DisplayList>

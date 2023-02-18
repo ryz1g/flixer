@@ -1,11 +1,11 @@
 const colors = {
-    "theme1": "rgb(255,0,0)",
-    "theme1Highlight" : "rgba(255,0,0,0.3)",
-    "buttonHighlight": "rgba(255,0,0,0.7)",
+    "theme1": "#FF3838",
+    "theme1Highlight" : "rgb(235,171,87,0.5)",
+    "buttonHighlight": "#FF3838",
     "buttonText": "white",
     "hoverTileBase": "rgba(0,0,0,0.8)",
     "hoverTileText": "white",
-    "ratings": "gold",
+    "ratings": "rgb(235,171,87)",
     "pureBlack": "black"
 }
 
