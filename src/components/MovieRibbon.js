@@ -9,6 +9,7 @@ const WrapperRibbon = styled.div`
     width: 100%;
     min-width: 635px;
     height: 90px;
+    padding-right: 20px;
 `;
 
 const RibbonGrowAnimation = keyframes`
@@ -16,7 +17,7 @@ const RibbonGrowAnimation = keyframes`
 
     }
     100% {
-        transform: scale(1.08);
+        transform: scale(1.04);
     }
 `;
 
@@ -31,14 +32,13 @@ const Ribbon = styled.div`
     border-radius: 25px 5px 25px 25px;
     overflow: hidden;
     gap: 10px;
-    padding: 0px 10px 0px 10px;
 
     &:hover {
         cursor: pointer;
         z-index: 20;
         box-shadow: 0px 0px 50px ${colors.theme1Highlight};
         animation: ${RibbonGrowAnimation} 0.15s ease-in-out;
-        animation-fill-mode: backwards;
+        animation-fill-mode: forwards;
     }
 `;
 
@@ -58,7 +58,6 @@ const InfoDiv = styled.span`
     flex-direction: row;
     align-items: center;
     color: ${colors.theme1};
-    gap: 10px;
 
     & > span {
         font-size: 0.8rem;
@@ -78,6 +77,7 @@ const RatingDiv = styled.div`
     align-items: center;
     font-size: 1rem;
     color: ${colors.ratings};
+    padding-right: 5px;
 `;
 
 function MovieRibbon({id, rank, currentPage, url, title, release_date, vote_average, vote_count, genres}) {
