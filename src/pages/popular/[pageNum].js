@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Grid from "@/components/Grid";
+import MovieGrid from "@/components/MovieGrid";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { getPopularMovies } from "@/requests";
 import { useState,useEffect } from "react";
@@ -44,7 +44,7 @@ export default function Home() {
         :
         <>
           <WelcomeHeader>{`Popular on TMDB`}</WelcomeHeader>
-          <Grid movieList={movieList}/>
+          <MovieGrid movieList={movieList}/>
           <ButtonRibbon>
             <PageNavigationBar baseUrl={"/popular/"} currentPage={pageNum}/>
           </ButtonRibbon>

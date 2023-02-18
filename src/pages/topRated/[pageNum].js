@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Grid from "@/components/Grid";
+import MovieList from "@/components/MovieList";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { getTopRatedMovies }  from "@/requests";
 import { useState,useEffect } from "react";
@@ -44,7 +44,7 @@ export default function Home() {
         :
         <>
           <WelcomeHeader>{`Top Rated on TMDB`}</WelcomeHeader>
-          <Grid movieList={movieList}/>
+          <MovieList movieList={movieList} currentPage={pageNum}/>
           <ButtonRibbon>
             <PageNavigationBar baseUrl={"/topRated/"} currentPage={pageNum}/>
           </ButtonRibbon>

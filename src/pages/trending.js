@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "@/components/Button";
-import Grid from "@/components/Grid";
+import MovieGrid from "@/components/MovieGrid";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { getTrendingMovies } from "@/requests";
 import { useState,useEffect } from "react";
@@ -45,7 +45,7 @@ export default function Home() {
             <Button onClick={() => trendingTime!== "day" ? setTrendingTime("day") : null} label="Today"/>
             <Button onClick={() => trendingTime!== "week" ? setTrendingTime("week") : null} label="This Week"/>
           </ButtonRibbon>
-          <Grid movieList={movieList}/>
+          <MovieGrid movieList={movieList}/>
         </>
       }
     </>

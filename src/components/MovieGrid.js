@@ -19,7 +19,7 @@ const TileGrid = styled.div`
   gap: 20px;
 `;
 
-const Grid = ({movieList}) => {
+const MovieGrid = ({movieList}) => {
     const [genres, setGenres] = useState({});
 
     useEffect(() => {
@@ -33,12 +33,11 @@ const Grid = ({movieList}) => {
     return (
         <DisplayGrid>
             <TileGrid>
-              {movieList.map(({id,poster_path,title,overview,vote_average,vote_count,genre_ids}) => {
+              {movieList.map(({id,poster_path,title,vote_average,vote_count,genre_ids}) => {
                 return <MovieTile key={id} 
                                   id={id}
                                   url={"https://image.tmdb.org/t/p/w300"+poster_path} 
                                   title={title}
-                                  overview={overview}
                                   vote_average={Math.floor(vote_average*100)/100}
                                   vote_count={vote_count}
                                   genre_ids={genre_ids}
@@ -49,4 +48,4 @@ const Grid = ({movieList}) => {
     );
 }
 
-export default Grid;
+export default MovieGrid;

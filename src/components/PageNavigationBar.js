@@ -50,7 +50,7 @@ const PageNavigationBar = ({baseUrl,currentPage}) => {
                 const calcPage = index + (currentPage>4 ? currentPage : 5);
                 return <NavCircle 
                             key={calcPage} label={calcPage} selected={currentPage===calcPage}
-                            onClick={() => router.push("/popular/"+calcPage)} />
+                            onClick={() => router.push(baseUrl+calcPage)} />
                 })
             }
             <Button onClick={() => router.push(baseUrl+Math.min(1000,currentPage+1))} label="Next"/>
