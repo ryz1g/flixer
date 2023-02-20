@@ -16,7 +16,7 @@ const TileGrowAnimation = keyframes`
 
     }
     100% {
-        transform: scale(1.08);
+        transform: scale(1.05);
     }
 `;
 

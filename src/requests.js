@@ -6,7 +6,8 @@ const urls = {
     movieDetails : `https://api.themoviedb.org/3/movie/`,
     popular : `https://api.themoviedb.org/3/movie/popular?api_key=${api["api-key"]}&language=en-US&page=`,
     topRated : `https://api.themoviedb.org/3/movie/top_rated?api_key=${api["api-key"]}&language=en-US&page=`,
-    trending : `https://api.themoviedb.org/3/trending/all/`
+    trending : `https://api.themoviedb.org/3/trending/all/`,
+    credits :  `https://api.themoviedb.org/3/movie/`
 };
 
 const getGenresList = async () => {
@@ -42,4 +43,10 @@ const getTrendingMovies = async (timePeriod) => {
     return data;
 };
 
-export {getGenresList,getMovieDetails,getPopularMovies,getTopRatedMovies,getTrendingMovies};
+const getCredits = async (id) => {
+    const d = await axios.get(urls.credits+id+`/credits?api_key=${api["api-key"]}&language=en-US`);
+    const data = await d.data;
+    return data;
+};
+
+export {getGenresList,getMovieDetails,getPopularMovies,getTopRatedMovies,getTrendingMovies,getCredits};

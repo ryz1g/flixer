@@ -29,7 +29,6 @@ const FullPageDiv = styled.div`
     font-weight: 900;
     align-items: center;
     width:100%;
-    height:calc(100vh - 160px);
     background-color: black;
 `;
 

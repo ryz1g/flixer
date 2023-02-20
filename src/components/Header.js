@@ -60,7 +60,7 @@ const Header = () => {
     const [selectedButton, setSelectedButton] = useState(0);
 
     const handleClick = (id,url="/") => {
-        if(selectedButton === id) return;
+        // if(selectedButton === id) return;
         router.push(url);
         setSelectedButton(id);
     }

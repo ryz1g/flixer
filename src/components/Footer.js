@@ -14,7 +14,7 @@ const Footer = () => {
     return (
         <FooterDiv>
             <>Powered By </>
-            <Image src="/tmdb.svg" alt="TMDB Logo" width={100} height={50}/>
+            <Image src="/tmdb.svg" alt="TMDB Logo" width={80} height={40}/>
             <>API </>
         </FooterDiv>
     );
