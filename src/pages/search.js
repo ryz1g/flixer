@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import MovieList from "@/components/MovieList";
+import MovieGrid from "@/components/MovieGrid";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { getTopRatedMovies } from "@/requests";
 import { useState, useEffect } from "react";
 import { colors } from "@/constants";
 import { useRouter } from "next/router";
 import PageNavigationBar from "@/components/PageNavigationBar";
+import { getSearchResults } from "@/requests";
 
 const WelcomeHeader = styled.div`
   font-size: 4rem;
@@ -27,12 +27,14 @@ const ButtonRibbon = styled.div`
 export default function Home() {
   const [movieList, setMovieList] = useState([]);
   const router = useRouter();
-  const pageNum = parseInt(router.query.pageNum);
+  var { queryString, pageNum, adultContent } = router.query;
+  pageNum = parseInt(pageNum);
+  const [maxPages, setMaxPages] = useState(1);
 
   useEffect(() => {
-    getTopRatedMovies(pageNum).then((result) => {
-      setMovieList(result);
-      // console.log(result);
+    getSearchResults(queryString, pageNum, adultContent).then((result) => {
+      setMovieList(result.results);
+      setMaxPages(result.total_pages);
     });
   }, [pageNum]);
 
@@ -42,10 +44,15 @@ export default function Home() {
         <LoadingSpinner />
       ) : (
         <>
-          <WelcomeHeader>{`Top Rated on TMDB`}</WelcomeHeader>
-          <MovieList movieList={movieList} currentPage={pageNum} />
+          <WelcomeHeader>{`Search Results on TMDB`}</WelcomeHeader>
+          <MovieGrid movieList={movieList} />
           <ButtonRibbon>
-            <PageNavigationBar baseUrl={"/topRated/"} currentPage={pageNum} />
+            <PageNavigationBar
+              baseUrl={"/search/"}
+              currentPage={pageNum}
+              maxPages={maxPages}
+              queryObject={router.query}
+            />
           </ButtonRibbon>
         </>
       )}

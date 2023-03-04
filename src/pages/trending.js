@@ -3,7 +3,7 @@ import Button from "@/components/Button";
 import MovieGrid from "@/components/MovieGrid";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { getTrendingMovies } from "@/requests";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { colors } from "@/constants";
 
 const WelcomeHeader = styled.div`
@@ -27,27 +27,38 @@ export default function Home() {
   const [trendingTime, setTrendingTime] = useState("day");
 
   useEffect(() => {
-    getTrendingMovies(trendingTime)
-    .then(result => {
+    getTrendingMovies(trendingTime).then((result) => {
       setMovieList(result);
       // console.log(result);
     });
-  },[trendingTime]);
+  }, [trendingTime]);
 
   return (
     <>
-      {movieList.length === 0 ? 
+      {movieList.length === 0 ? (
         <LoadingSpinner />
-        :
+      ) : (
         <>
-          <WelcomeHeader>{`Trending ${trendingTime === 'day' ? "Today" : "This Week"}`}</WelcomeHeader>
+          <WelcomeHeader>{`Trending ${
+            trendingTime === "day" ? "Today" : "This Week"
+          }`}</WelcomeHeader>
           <ButtonRibbon>
-            <Button onClick={() => trendingTime!== "day" ? setTrendingTime("day") : null} label="Today"/>
-            <Button onClick={() => trendingTime!== "week" ? setTrendingTime("week") : null} label="This Week"/>
+            <Button
+              onClick={() =>
+                trendingTime !== "day" ? setTrendingTime("day") : null
+              }
+              label="Today"
+            />
+            <Button
+              onClick={() =>
+                trendingTime !== "week" ? setTrendingTime("week") : null
+              }
+              label="This Week"
+            />
           </ButtonRibbon>
-          <MovieGrid movieList={movieList}/>
+          <MovieGrid movieList={movieList} />
         </>
-      }
+      )}
     </>
-  )
+  );
 }
