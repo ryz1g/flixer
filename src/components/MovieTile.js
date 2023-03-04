@@ -82,7 +82,7 @@ function MovieTile({
   overview,
   vote_average,
   vote_count,
-  genres,
+  genres = [],
 }) {
   const [overlay, setOverlay] = useState(false);
   const getStarString = (rating) => {

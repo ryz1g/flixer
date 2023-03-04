@@ -9,6 +9,7 @@ const urls = {
   trending: `https://api.themoviedb.org/3/trending/all/`,
   credits: `https://api.themoviedb.org/3/movie/`,
   search: `https://api.themoviedb.org/3/search/movie?api_key=${api["api-key"]}&language=en-US&query=`,
+  similarMovies: `https://api.themoviedb.org/3/movie/`,
 };
 
 const getGenresList = async () => {
@@ -62,6 +63,14 @@ const getSearchResults = async (queryString, pageNo, adult = false) => {
   return data;
 };
 
+const getSimilarMovies = async (movieId) => {
+  const d = await axios.get(
+    urls.similarMovies +`${movieId}/similar?api_key=${api["api-key"]}&language=en-US&page=1`
+  );
+  const data = d.data;
+  return data;
+};
+
 export {
   getGenresList,
   getMovieDetails,
@@ -70,4 +79,5 @@ export {
   getTrendingMovies,
   getCredits,
   getSearchResults,
+  getSimilarMovies
 };
