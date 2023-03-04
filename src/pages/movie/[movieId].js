@@ -109,6 +109,21 @@ const IMDBLink = styled.a`
     }
 `;
 
+const CreditTrack = styled.div`
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 10px;
+        overflow: scroll;
+    `;
+
+const CreditItem = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: fit-content;
+`;
+
 const MoviePage = () => {
     const router = useRouter();
     const movieId = router.query.movieId;
@@ -119,13 +134,11 @@ const MoviePage = () => {
         getMovieDetails(movieId)
         .then((result) => {
             setMovieDetails(result);
-            console.log(result);
         })
 
         getCredits(movieId)
         .then((result) => {
             setMovieCredits(result);
-            console.log(result);
         })
     },[]);
 
@@ -146,21 +159,6 @@ const MoviePage = () => {
         }
         return st;
     };
-
-    const CreditTrack = styled.div`
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        gap: 10px;
-        overflow: scroll;
-    `;
-
-    const CreditItem = styled.div`
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        height: fit-content;
-    `;
 
     const Credits = () => {
         if(Object.keys(movieCredits).length !== 0)
