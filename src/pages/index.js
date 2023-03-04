@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 
 const FullPageDiv = styled.div`
   display: flex;
-  height: calc(100vh - 133.5px);
+  height: calc(100vh - 150px);
   flex-direction: column;
   gap: 20px;
   align-items: center;

@@ -1,13 +1,15 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { getMovieDetails,getCredits } from "@/requests";
+import { getMovieDetails,getCredits,getSimilarMovies } from "@/requests";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useState,useEffect } from "react";
 import styled from "styled-components";
 import { colors } from "@/constants";
+import MovieTrack from "@/components/MovieTrack";
 
 const FullPage = styled.div`
     position: relative;
+    overflow-x: hidden;
 `;
 
 const BackdropWrapperWrapper = styled.div`
@@ -52,8 +54,14 @@ const PosterWrapper = styled.div`
     position: relative;
     width: 90vw;
     padding-left: 5%;
-    top: -25vw;
+    top: max(-25vw , -300px);
     /* left: 5%; */
+`;
+
+const PosterImageWrapper = styled.div`
+    position: relative;
+    width: max(20vw, 230px);
+    height: max(30vw, 345px);
 `;
 
 const MovieDetails = styled.div`
@@ -63,7 +71,7 @@ const MovieDetails = styled.div`
     display: flex;
     flex-direction: column;
     gap: 25px;
-    width: calc(100% - 300px);
+    width: max( calc(80vw - 135px), 845px);
 
     p {
         font-size: 1.3rem;
@@ -103,6 +111,16 @@ const MoneyDiv = styled.div`
     color: green;
 `;
 
+const PosterAndDetails = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: max(20vw, 230px);
+    // height: calc(35);
+    gap: 20px;
+    min-height: 490px;
+`;
+
 const IMDBLink = styled.a`
     &:hover {
         cursor: pointer;
@@ -114,7 +132,7 @@ const CreditTrack = styled.div`
         flex-direction: row;
         width: 100%;
         gap: 10px;
-        overflow: scroll;
+        overflow-x: scroll;
     `;
 
 const CreditItem = styled.div`
@@ -129,6 +147,7 @@ const MoviePage = () => {
     const movieId = router.query.movieId;
     const [movieDetails, setMovieDetails] = useState({});
     const [movieCredits, setMovieCredits] = useState({});
+    const [similarMovieList, setSimilarMovieList] = useState([]);
 
     useEffect(() => {
         getMovieDetails(movieId)
@@ -140,7 +159,12 @@ const MoviePage = () => {
         .then((result) => {
             setMovieCredits(result);
         })
-    },[]);
+
+        getSimilarMovies(movieId)
+        .then((results) => {
+            setSimilarMovieList(results.results);
+        })
+    },[movieId]);
 
     const getStarString = (rating) => {
         var st="";
@@ -166,7 +190,7 @@ const MoviePage = () => {
                 <CreditTrack>
                     {movieCredits.cast.map(({character,name,profile_path}) => {
                         return (
-                            <CreditItem key={profile_path}>
+                            <CreditItem key={profile_path+name}>
                                     <Image src={`https://image.tmdb.org/t/p/w200`+profile_path} alt={name} width="90" height="135"/>
                                     <InfoDiv>{character}</InfoDiv>
                                     {name}
@@ -192,7 +216,30 @@ const MoviePage = () => {
                         <BackdropOverlay />
                     </BackdropWrapperWrapper>
                     <PosterWrapper>
-                        <Image src={"https://image.tmdb.org/t/p/w500"+movieDetails.poster_path} alt="Poster" width="300" height="450"/>
+                        <PosterAndDetails>
+                            <PosterImageWrapper>
+                                <Image src={"https://image.tmdb.org/t/p/w500"+movieDetails.poster_path} alt="Poster" fill/>
+                            </PosterImageWrapper>
+                            <Ratings>
+                                <span>{`${movieDetails.runtime} mins`}</span>
+                                <RatingDiv>
+                                    <span>{getStarString(movieDetails.vote_average/2)}</span>
+                                    <span>{Math.floor(movieDetails.vote_average*100)/100+"/10 "}</span>
+                                    <span>{`(${movieDetails.vote_count})`}</span>
+                                </RatingDiv>
+                                <IMDBLink href={`https://www.imdb.com/title/${movieDetails.imdb_id}/`} target="_blank">
+                                    <Image src="/imdb_logo.png" alt="IMDB logo" width="30" height="30"/>
+                                </IMDBLink>
+                            </Ratings>
+                            <MoneyDiv>
+                                <span>{`Revenue : $${movieDetails.revenue}`}</span>
+                                <span>{`Budget : $${movieDetails.budget}`}</span>
+                                {/* {movieDetails.production_companies.map(({name, logo_path}) => {
+                                    return <Image key={logo_path} src={"https://image.tmdb.org/t/p/w300"+logo_path} alt={name} height="30" width="60" />
+                                })} */}
+                            </MoneyDiv>
+                            {similarMovieList.length !== 0 ? <MovieTrack movieList={similarMovieList}/> : null}
+                        </PosterAndDetails>
                         <MovieDetails>
                             <p>{movieDetails.overview}</p>
                             <InfoDiv>
@@ -202,24 +249,6 @@ const MoviePage = () => {
                                 })}
                             </InfoDiv>
                             <Credits />
-                            <MoneyDiv>
-                                <span>{`Revenue : $${movieDetails.revenue}`}</span>
-                                <span>{`Budget : $${movieDetails.budget}`}</span>
-                                {/* {movieDetails.production_companies.map(({name, logo_path}) => {
-                                    return <Image key={logo_path} src={"https://image.tmdb.org/t/p/w300"+logo_path} alt={name} height="30" width="60" />
-                                })} */}
-                            </MoneyDiv>
-                            <Ratings>
-                                <span>{`${movieDetails.runtime} mins`}</span>
-                                <RatingDiv>
-                                    <span>{getStarString(movieDetails.vote_average/2)}</span>
-                                    <span>{Math.floor(movieDetails.vote_average*100)/100+"/10 "}</span>
-                                    <span>{`(${movieDetails.vote_count} votes)`}</span>
-                                </RatingDiv>
-                                <IMDBLink href={`https://www.imdb.com/title/${movieDetails.imdb_id}/`} target="_blank">
-                                    <Image src="/imdb_logo.png" alt="IMDB logo" width="30" height="30"/>
-                                </IMDBLink>
-                            </Ratings>
                         </MovieDetails>
                     </PosterWrapper>
                 </FullPage>
